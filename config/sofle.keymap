@@ -67,12 +67,13 @@
 
         /* Layer 0: QWERTY */
         layer0 {
+            display-name = "MAC";
             bindings = <
                 &kp GRAVE       &kp N1          &kp N2          &kp N3          &kp N4          &kp N5          &kp N6          &kp N7          &kp N8          &kp N9          &kp N0          &kp MINUS
                 &kp ESCAPE      &kp Q           &kp W           &kp E           &kp R           &kp T           &kp Y           &kp U           &kp I           &kp O           &kp P           &kp ENTER
                 &kp TAB         &kp A           &kp S           &kp D           &kp F           &kp G           &kp H           &kp J           &kp K           &kp L           &kp SEMICOLON   &kp SINGLE_QUOTE
                 &kp LEFT_SHIFT  &kp Z           &kp X           &kp C           &kp V           &kp B           &kp C_MUTE      &none           &kp N           &kp M           &kp COMMA       &kp DOT        &kp SLASH      &kp RIGHT_SHIFT
-                &kp LEFT_GUI    &kp LEFT_ALT    &mo RAISE       &kp SPACE       &kp LEFT_CONTROL &mo LOWER       &kp BACKSPACE   &rctrl_adj      &kp RIGHT_ALT   &kp RIGHT_GUI
+                &kp LEFT_CONTROL    &kp LEFT_ALT    &mo RAISE       &kp SPACE       &kp LEFT_GUI &mo LOWER       &kp BACKSPACE    &kp RIGHT_GUI     &kp RIGHT_ALT   &rctrl_adj
             >;
         };
 
