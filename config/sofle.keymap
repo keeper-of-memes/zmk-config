@@ -77,6 +77,7 @@
 
         /* Layer 1: RAISE – numpad / symbols (QMK _RAISE) */
         layer1 {
+            display-name = "RAISE";
             bindings = <
                 &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &kp KP_ASTERISK &kp KP_COMMA     &kp DOLLAR
                 &kp NON_US_BACKSLASH &trans      &trans          &kp LEFT_BRACKET &kp RIGHT_BRACKET &kp UNDERSCORE &none          &kp KP_N7       &kp KP_N8       &kp KP_N9       &kp KP_PLUS     &kp LA(N2)
@@ -88,6 +89,7 @@
 
         /* Layer 2: LOWER – function / navigation / editing (QMK _LOWER) */
         layer2 {
+            display-name = "LOWER";
             bindings = <
                 &trans          &kp F1          &kp F2          &kp F3          &kp F4          &kp F5          &kp F6          &kp F7          &kp F8          &kp F9          &kp F10         &kp F11
                 &trans          &kp LC(Q)       &kp LC(W)       &kp RC(RS(N5))  &kp LC(R)       &kp LC(T)       &kp LG(UP)      &kp LA(LEFT)    &kp UP          &kp LA(RIGHT)   &kp LA(BACKSPACE) &kp LC(ENTER)
@@ -99,6 +101,7 @@
 
         /* Layer 3: ADJUST – media / layout (QMK _ADJUST) */
         layer3 {
+            display-name = "ADJUST";
             bindings = <
                 &bt BT_CLR        &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3    &bt BT_SEL 4           &none           &none           &none           &none           &none           &none           &none
                 &ext_power EP_TOG &rgb_ug RGB_HUD &rgb_ug RGB_HUI &rgb_ug RGB_SAD &rgb_ug RGB_SAI &rgb_ug RGB_EFF           &kp C_BRIGHTNESS_INC &kp C_VOLUME_DOWN &kp C_MUTE   &kp C_VOLUME_UP   &none           &none
@@ -110,6 +113,7 @@
 
         /* Layer 4: OPT – LSA combos (QMK _5) */
         layer4 {
+            display-name = "OPT";
             bindings = <
                 &none           &kp LS(LA(N1))  &kp LS(LA(N2))  &kp LS(LA(N3))  &kp LS(LA(N4))  &kp LS(LA(N5))  &kp LS(LA(N6))  &kp LS(LA(N7))  &kp LS(LA(N8))  &kp LS(LA(N9))  &kp LS(LA(N0))  &none
                 &none           &kp LS(LA(Q))   &kp LS(LA(W))   &kp LS(LA(E))   &kp LS(LA(R))   &kp LS(LA(T))   &none           &none           &kp LS(LA(F20)) &none           &none           &kp LS(LA(ENTER))
