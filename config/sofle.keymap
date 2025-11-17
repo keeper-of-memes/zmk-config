@@ -71,6 +71,10 @@
                 &kp LEFT_SHIFT  &kp Z           &kp X           &kp C           &kp V           &kp B           &kp C_MUTE      &none           &kp N           &kp M           &kp COMMA       &kp DOT        &kp SLASH      &kp RIGHT_SHIFT
                 &kp LEFT_CONTROL    &kp LEFT_ALT    &mo RAISE       &kp SPACE       &kp LEFT_GUI &mo LOWER       &kp BACKSPACE    &kp RIGHT_GUI     &kp RIGHT_ALT   &rctrl_adj
             >;
+            sensor-bindings = <
+                &inc_dec_kp C_VOL_UP C_VOL_DN 
+                &inc_dec_kp PG_UP PG_DN
+                >;
         };
 
         /* Layer 1: RAISE – numpad / symbols (QMK _RAISE) */
@@ -83,6 +87,10 @@
                 &trans          &kp GRAVE       &none           &none           &sk RCTRL       &none           &trans          &trans          &kp KP_N0       &kp KP_N1       &kp KP_N2       &kp KP_N3      &kp KP_EQUAL   &trans
                 &trans          &trans          &trans          &trans          &trans          &trans          &trans          &rctrl_adj      &trans          &trans
             >;
+            sensor-bindings = <
+                &inc_dec_kp C_VOL_UP C_VOL_DN 
+                &inc_dec_kp PG_UP PG_DN
+                >;
         };
 
         /* Layer 2: LOWER – function / navigation / editing (QMK _LOWER) */
@@ -95,6 +103,10 @@
                 &trans          &kp LC(Z)       &kp LC(X)       &kp LC(C)       &kp LC(V)       &trans          &trans          &trans          &none           &kp LG(LEFT)    &none           &kp LG(RIGHT)  &kp LC(BACKSPACE) &trans
                 &trans          &trans          &trans          &trans          &trans          &trans          &trans          &rctrl_adj      &trans          &trans
             >;
+            sensor-bindings = <
+                &inc_dec_kp C_VOL_UP C_VOL_DN 
+                &inc_dec_kp PG_UP PG_DN
+                >;
         };
 
         /* Layer 3: ADJUST – media / layout (QMK _ADJUST) */
@@ -107,6 +119,10 @@
                 &none           &rgb_ug RGB_BRD &rgb_ug RGB_BRI           &rgb_ug RGB_TOG           &kp LG(X)       &kp LG(C)       &none           &none           &none           &none           &none           &kp LC(LS(LA(M))) &none          &none
                 &none           &trans          &trans          &trans          &trans          &trans          &trans          &rctrl_adj      &trans          &trans
             >;
+            sensor-bindings = <
+                &inc_dec_kp C_VOL_UP C_VOL_DN 
+                &inc_dec_kp PG_UP PG_DN
+                >;
         };
 
         /* Layer 4: OPT – LSA combos (QMK _5) */
