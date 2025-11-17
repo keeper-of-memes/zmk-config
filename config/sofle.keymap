@@ -28,10 +28,6 @@
 #define ADJUST   3
 #define OPT      4
 
-&led_strip {
-    chain-length = <36>;
-};
-
 &nice_view_spi {
     cs-gpios = <&pro_micro 4 GPIO_ACTIVE_HIGH>;
 };
