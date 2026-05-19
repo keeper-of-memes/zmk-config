@@ -14,7 +14,7 @@ void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
     static uint8_t buf_copy[BUFFER_SIZE * BUFFER_SIZE * sizeof(lv_color_t)];
     memcpy(buf_copy, buf, sizeof(buf_copy));
 
-    const lv_color_format_t cf = LV_COLOR_FORMAT_NATIVE;
+    const lv_color_format_t cf = LV_COLOR_FORMAT_L8;
     const uint32_t stride = lv_draw_buf_width_to_stride(BUFFER_SIZE, cf);
     lv_draw_sw_rotate(buf_copy, buf, BUFFER_SIZE, BUFFER_SIZE, stride, stride,
                       LV_DISPLAY_ROTATION_270, cf);
