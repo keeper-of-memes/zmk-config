@@ -1,0 +1,68 @@
+From: Ross <stag_chows_4i@icloud.com>
+Subject: [PATCH] battery: replace linear mv->pct with piecewise LiPo curve
+
+ZMK's default mV-to-percentage mapping is a single linear segment
+between 3.45V and 4.20V, which doesn't match the actual discharge
+curve of a single-cell LiPo under light load. The result is a reading
+that sits high for most of the discharge then collapses in the last
+~20% of real capacity.
+
+Replace with a piecewise-linear lookup against an 11-point curve.
+The shape comes from typical 1S LiPo datasheets at ~0.1C discharge,
+which is roughly the regime a wireless keyboard sees.
+
+The curve values used here:
+
+    4.20V → 100%      3.70V →  30%
+    4.10V →  90%      3.60V →  20%
+    4.00V →  80%      3.50V →  12%
+    3.90V →  65%      3.40V →   6%
+    3.80V →  45%      3.30V →   3%
+                      3.00V →   0%
+---
+ app/src/battery.c | 31 ++++++++++++++++++++++++++-----
+ 1 file changed, 26 insertions(+), 5 deletions(-)
+
+diff --git a/app/src/battery.c b/app/src/battery.c
+--- a/app/src/battery.c
++++ b/app/src/battery.c
+@@ -23,12 +23,33 @@ static uint8_t last_state_of_charge = 0;
+ uint8_t zmk_battery_state_of_charge(void) { return last_state_of_charge; }
+
+ static uint8_t lithium_ion_mv_to_pct(int16_t bat_mv) {
+-    if (bat_mv >= 4200) {
+-        return 100;
+-    } else if (bat_mv <= 3450) {
++    static const struct {
++        int16_t mv;
++        uint8_t pct;
++    } curve[] = {
++        {4200, 100}, {4100, 90}, {4000, 80}, {3900, 65}, {3800, 45},
++        {3700, 30},  {3600, 20}, {3500, 12}, {3400, 6},  {3300, 3},
++        {3000, 0},
++    };
++    const int n = sizeof(curve) / sizeof(curve[0]);
++
++    if (bat_mv >= curve[0].mv) {
++        return curve[0].pct;
++    }
++    if (bat_mv <= curve[n - 1].mv) {
+         return 0;
+     }
+-    return bat_mv * 2 / 15 - 459;
++    for (int i = 1; i < n; i++) {
++        if (bat_mv >= curve[i].mv) {
++            int16_t mv_hi = curve[i - 1].mv;
++            int16_t mv_lo = curve[i].mv;
++            uint8_t pct_hi = curve[i - 1].pct;
++            uint8_t pct_lo = curve[i].pct;
++            return (uint8_t)(pct_lo + (int32_t)(bat_mv - mv_lo) *
++                                          (pct_hi - pct_lo) / (mv_hi - mv_lo));
++        }
++    }
++    return 0;
+ }
+
+ static int zmk_battery_update(const struct device *battery) {
+--
+2.40.0

@@ -65,6 +65,46 @@ take effect, flash the `settings_reset` artifact on each half after
 flashing the new firmware. That wipes NVS and the device will boot with
 the keymap from this repo.
 
+## Battery percentage curve (optional follow-up)
+
+This board is a SuperMini nRF52840 clone. The on-board battery-divider
+footprints are unpopulated, but the nRF52840 is wired in VDDH mode and
+the chip's internal `VDDHDIV5` SAADC channel reads battery voltage
+directly. The `nice_nano_v2` board definition we build against already
+configures the battery driver to use that channel, so **voltage
+measurement is working**.
+
+The percentage reported by ZMK is wrong because ZMK's default
+voltage-to-percentage mapping is a single linear segment, and LiPo
+cells don't discharge linearly. The result is the classic "looks 80%
+forever then dies in an hour" behaviour.
+
+[`patches/0001-lipo-curve.patch`](patches/0001-lipo-curve.patch) replaces
+the linear segment with an 11-point piecewise-linear LiPo discharge
+curve. To enable it:
+
+1. Fork `zmkfirmware/zmk` to your GitHub account (one-click on the
+   ZMK repo page).
+2. Apply the patch on a branch named `lipo-curve`:
+   ```
+   git clone git@github.com:keeper-of-memes/zmk.git
+   cd zmk
+   git checkout -b lipo-curve
+   git am /path/to/zmk-config/patches/0001-lipo-curve.patch
+   git push -u origin lipo-curve
+   ```
+3. In `config/west.yml`, change the `zmk` project's remote from
+   `zmkfirmware` to `keeper-of-memes` and its revision from `main` to
+   `lipo-curve`.
+
+GitHub Actions will then build against the patched ZMK and the OLED
+battery widget (plus the BLE battery service the host sees) will report
+a realistic percentage.
+
+The `west.yml` in this PR adds the `keeper-of-memes` remote ready to be
+flipped, but leaves the `zmk` project pointing at upstream so the build
+keeps working until the fork exists.
+
 ## Expected impact
 
 Before: idle current dominated by always-on RGB and active MCU; battery
