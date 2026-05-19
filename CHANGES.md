@@ -105,6 +105,67 @@ The `west.yml` in this PR adds the `keeper-of-memes` remote ready to be
 flipped, but leaves the `zmk` project pointing at upstream so the build
 keeps working until the fork exists.
 
+## nice_view_gem LVGL 9 port (required to build)
+
+Zephyr 4.1 (which current ZMK builds against) ships LVGL 9, and LVGL 9
+removed the entire `lv_canvas_draw_*` family and reworked image headers
+and colour formats. The `MechboardsLTD/zmk-module:nv_gem` branch this
+config depends on is written for LVGL 8 and has not been updated by
+upstream (last commit March 2025).
+
+[`patches/0002-nv-gem-lvgl9.patch`](patches/0002-nv-gem-lvgl9.patch)
+ports the module:
+
+- Adds `canvas_draw_rect/text/arc/line/img` wrapper functions in
+  `widgets/util.c` that take the same arguments as the old
+  `lv_canvas_draw_*` API but internally use the LVGL 9 layer pattern
+  (`lv_canvas_init_layer` → `lv_draw_*` → `lv_canvas_finish_layer`).
+  Same approach ZMK upstream used for its own `nice_view` widget.
+- Rewrites `rotate_canvas()` — `lv_canvas_transform()` is gone in
+  LVGL 9; uses `lv_draw_sw_rotate()` against the raw buffer instead.
+- Mechanically renames `lv_canvas_draw_*` → `canvas_draw_*`,
+  `lv_draw_img_dsc_t` → `lv_draw_image_dsc_t`, `LV_IMG_ZOOM_NONE` →
+  `LV_SCALE_NONE`, `LV_IMG_CF_TRUE_COLOR` → `LV_COLOR_FORMAT_NATIVE`
+  across the 11 affected files.
+- Updates image asset declarations in `assets/images.c` and
+  `assets/crystal.c` for the LVGL 9 `lv_image_header_t` struct
+  (adds `magic = LV_IMAGE_HEADER_MAGIC`, removes the now-deleted
+  `always_zero` and `reserved` fields, swaps
+  `LV_IMG_CF_INDEXED_1BIT` → `LV_COLOR_FORMAT_I1`).
+
+To enable, fork `MechboardsLTD/zmk-module` and apply the patch:
+
+```
+git clone git@github.com:keeper-of-memes/zmk-module.git
+cd zmk-module
+git checkout -b nv_gem_lvgl9 nv_gem
+git am /path/to/zmk-config/patches/0002-nv-gem-lvgl9.patch
+git push -u origin nv_gem_lvgl9
+```
+
+Then in `config/west.yml`, change the `nv-gem` project's `url` to
+your fork and its `revision` to `nv_gem_lvgl9`.
+
+Until the fork exists and `west.yml` is flipped, the build will fail
+on the LVGL 9 errors documented above.
+
+Risks worth flagging:
+
+- **Visual correctness is not guaranteed.** The patch makes the build
+  pass, but LVGL 9 changed colour-format handling for 1-bit displays.
+  After the first successful flash, expect to debug any rendering
+  glitches (positions, colours, transparency) and iterate.
+- **`lv_color_t` sizing.** LVGL 9 makes `lv_color_t` always RGB888
+  (3 bytes), whereas LVGL 8 sized it to `LV_COLOR_DEPTH`. The widget
+  structs still allocate `lv_color_t cbuf[]` arrays, which now use
+  3× the RAM of before. Not a correctness issue but watch for OOM at
+  flash time.
+- **`always_zero`/`reserved` removal.** If LVGL 9 added bits-packing
+  that uses those former positions, mis-initialised images may
+  render as garbage. The patch initialises only documented fields,
+  but if the I1 palette layout differs subtly from LVGL 8's, icons
+  could come out inverted or shifted.
+
 ## Expected impact
 
 Before: idle current dominated by always-on RGB and active MCU; battery
