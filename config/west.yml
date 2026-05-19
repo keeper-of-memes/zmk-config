@@ -9,7 +9,10 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      # Pinned to a known-good commit (the last one before this repo's last
+      # successful build on 2025-11-25). Tracking `main` was breaking builds
+      # because of ZMK's in-flight HWMv2 board reorganisation.
+      revision: e34793e8c71990bf08be7ff67900f6a8d04f97e3
       import: app/west.yml
     - name: nv-gem
       url: https://github.com/MechboardsLTD/zmk-module
