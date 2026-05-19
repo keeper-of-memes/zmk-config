@@ -11,12 +11,9 @@ manifest:
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    # After forking MechboardsLTD/zmk-module and applying
-    # patches/0002-nv-gem-lvgl9.patch, change `url` below to point at your
-    # fork and `revision` to `nv_gem_lvgl9`. Until then the build will
-    # fail because the upstream nv_gem branch is LVGL-8-only.
-    - name: nv-gem
-      url: https://github.com/MechboardsLTD/zmk-module
-      revision: nv_gem
+    # nice_view_gem shield used to come from MechboardsLTD/zmk-module:nv_gem
+    # but that branch is LVGL-8-only and breaks under Zephyr 4.1 / LVGL 9.
+    # A patched copy now lives directly in this repo under
+    # boards/shields/nice_view_gem/ — see CHANGES.md.
   self:
     path: config

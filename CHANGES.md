@@ -133,21 +133,17 @@ ports the module:
   `always_zero` and `reserved` fields, swaps
   `LV_IMG_CF_INDEXED_1BIT` → `LV_COLOR_FORMAT_I1`).
 
-To enable, fork `MechboardsLTD/zmk-module` and apply the patch:
+Rather than forking the upstream module, the patched copy lives
+directly in this repo at
+[`boards/shields/nice_view_gem/`](boards/shields/nice_view_gem). This
+repo is already configured as a ZMK extra module (see
+[`zephyr/module.yml`](zephyr/module.yml) with `board_root: .`), so the
+shield is picked up automatically from there. The `nv-gem` project
+entry in `config/west.yml` has been removed.
 
-```
-git clone git@github.com:keeper-of-memes/zmk-module.git
-cd zmk-module
-git checkout -b nv_gem_lvgl9 nv_gem
-git am /path/to/zmk-config/patches/0002-nv-gem-lvgl9.patch
-git push -u origin nv_gem_lvgl9
-```
-
-Then in `config/west.yml`, change the `nv-gem` project's `url` to
-your fork and its `revision` to `nv_gem_lvgl9`.
-
-Until the fork exists and `west.yml` is flipped, the build will fail
-on the LVGL 9 errors documented above.
+The original patch (`patches/0002-nv-gem-lvgl9.patch`) is kept in this
+PR as a record of the diff against the upstream `nv_gem` branch, in
+case a future upstream update lets us delete the in-repo copy.
 
 Risks worth flagging:
 
