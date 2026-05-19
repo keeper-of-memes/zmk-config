@@ -79,9 +79,9 @@
 
         /* Layer 1: RAISE – numpad / symbols (QMK _RAISE) */
         layer1 {
-            display-name = "RAISE";
+            display-name = "Symbols";
             bindings = <
-                &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &kp KP_ASTERISK &kp KP_COMMA     &kp DOLLAR
+                &trans          &trans          &trans          &trans          &trans          &trans          &kp KP_NUMLOCK  &trans          &trans          &kp KP_ASTERISK &kp KP_COMMA     &kp DOLLAR
                 &kp NON_US_BACKSLASH &trans      &trans          &kp LEFT_BRACKET &kp RIGHT_BRACKET &kp UNDERSCORE &none          &kp KP_N7       &kp KP_N8       &kp KP_N9       &kp KP_PLUS     &kp LA(N2)
                 &trans          &kp EXCLAMATION &kp AT_SIGN     &kp KP_SLASH    &kp QUESTION    &kp BACKSLASH   &kp KP_DOT      &kp KP_N4       &kp KP_N5       &kp KP_N6       &kp KP_MINUS    &kp HASH
                 &trans          &kp GRAVE       &none           &none           &sk RCTRL       &none           &trans          &trans          &kp KP_N0       &kp KP_N1       &kp KP_N2       &kp KP_N3      &kp KP_EQUAL   &trans
@@ -95,9 +95,9 @@
 
         /* Layer 2: LOWER – function / navigation / editing (QMK _LOWER) */
         layer2 {
-            display-name = "LOWER";
+            display-name = "Function";
             bindings = <
-                &trans          &kp F1          &kp F2          &kp F3          &kp F4          &kp F5          &kp F6          &kp F7          &kp F8          &kp F9          &kp F10         &kp F11
+                &trans          &kp F1          &kp F2          &kp F3          &kp F4          &kp F5          &kp F6          &kp F7          &kp F8          &kp F9          &kp F10         &kp F12
                 &trans          &kp LC(Q)       &kp LC(W)       &kp RC(RS(N5))  &kp LC(R)       &kp LC(T)       &kp LG(UP)      &kp LA(LEFT)    &kp UP          &kp LA(RIGHT)   &kp LA(BACKSPACE) &kp LC(ENTER)
                 &kp CAPSLOCK    &kp LC(A)       &kp LC(S)       &none           &kp LC(LA(F))   &kp ENTER       &kp LC(SPACE)   &kp LEFT        &kp DOWN        &kp RIGHT       &kp DELETE      &kp BACKSPACE
                 &trans          &kp LC(Z)       &kp LC(X)       &kp LC(C)       &kp LC(V)       &trans          &trans          &trans          &none           &kp LG(LEFT)    &none           &kp LG(RIGHT)  &kp LC(BACKSPACE) &trans
@@ -111,7 +111,7 @@
 
         /* Layer 3: ADJUST – media / layout (QMK _ADJUST) */
         layer3 {
-            display-name = "ADJUST";
+            display-name = "Adjust";
             bindings = <
                 &bt BT_CLR        &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3    &bt BT_SEL 4           &none           &none           &none           &none           &none           &none           &none
                 &ext_power EP_TOG &rgb_ug RGB_HUD &rgb_ug RGB_HUI &rgb_ug RGB_SAD &rgb_ug RGB_SAI &rgb_ug RGB_EFF           &kp C_BRIGHTNESS_INC &kp C_VOLUME_DOWN &kp C_MUTE   &kp C_VOLUME_UP   &none           &none
@@ -132,7 +132,7 @@
                 &none           &kp LS(LA(N1))  &kp LS(LA(N2))  &kp LS(LA(N3))  &kp LS(LA(N4))  &kp LS(LA(N5))  &kp LS(LA(N6))  &kp LS(LA(N7))  &kp LS(LA(N8))  &kp LS(LA(N9))  &kp LS(LA(N0))  &none
                 &none           &kp LS(LA(Q))   &kp LS(LA(W))   &kp LS(LA(E))   &kp LS(LA(R))   &kp LS(LA(T))   &none           &none           &kp LS(LA(F20)) &none           &none           &kp LS(LA(ENTER))
                 &none           &kp LS(LA(A))   &kp LS(LA(S))   &kp LS(LA(D))   &kp LS(LA(F))   &none           &kp LS(LA(H))   &kp LS(LA(J))   &kp LS(LA(K))   &kp LS(LA(L))   &none           &none
-                &kp LEFT_GUI    &kp LS(LA(Z))   &none           &none           &none           &none           &none           &none           &kp LS(LA(N))   &kp LS(LA(M))   &kp LS(LA(COMMA)) &kp LS(LA(DOT)) &none         &none
+                &kp LEFT_CONTROL &kp LS(LA(Z))  &none           &none           &none           &none           &none           &none           &kp LS(LA(N))   &kp LS(LA(M))   &kp LS(LA(COMMA)) &kp LS(LA(DOT)) &none         &none
                 &none           &none           &none           &none           &none           &kp LS(LA(SPACE)) &trans         &rctrl_adj      &none           &none
             >;
         };
