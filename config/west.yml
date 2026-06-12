@@ -2,15 +2,22 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    # Additional modules containing boards/shields/custom code can be listed here as well
-    # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
+    - name: m165437
+      url-base: https://github.com/M165437
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    - name: nv-gem
-      url: https://github.com/MechboardsLTD/zmk-module
-      revision: nv_gem
+    # nice-view-gem: the maintained upstream by the original author.
+    # Per its README, pin the module revision to match ZMK:
+    #   ZMK main (Zephyr 4.1+) → gem main   |   ZMK v0.3 → gem v0.3.0
+    # ZMK is on main (Zephyr 4.1 / LVGL 9) here, so use gem main, which
+    # the author has already migrated to LVGL 9. (Replaces the stale
+    # MechboardsLTD/zmk-module:nv_gem fork, which is LVGL-8-only and
+    # fails to build against Zephyr 4.1.)
+    - name: nice-view-gem
+      remote: m165437
+      revision: main
   self:
     path: config
