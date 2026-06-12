@@ -2,8 +2,8 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    # Additional modules containing boards/shields/custom code can be listed here as well
-    # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
+    - name: m165437
+      url-base: https://github.com/M165437
   projects:
     # Pinned to v0.3 (Zephyr 3.5) per https://zmk.dev/blog/2025/06/20/pinned-zmk
     # Must stay in sync with the @v0.3 reference in .github/workflows/build.yml.
@@ -11,8 +11,13 @@ manifest:
       remote: zmkfirmware
       revision: v0.3
       import: app/west.yml
-    - name: nv-gem
-      url: https://github.com/MechboardsLTD/zmk-module
-      revision: nv_gem
+    # nice-view-gem: the maintained upstream by the original author.
+    # Per its README, pin the module revision to match ZMK:
+    #   ZMK v0.3 → gem v0.3.0   |   ZMK main (Zephyr 4.1+) → gem main
+    # (The previously-used MechboardsLTD/zmk-module:nv_gem is a stale
+    # fork byte-identical to this v0.3.0 tag — switched to canonical.)
+    - name: nice-view-gem
+      remote: m165437
+      revision: v0.3.0
   self:
     path: config
